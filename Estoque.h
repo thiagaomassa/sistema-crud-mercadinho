@@ -3,7 +3,6 @@
 #include <vector>
 #include <string>
 #include "Produto.h"
-#pragma once
 using namespace std;
 
 class Estoque{
