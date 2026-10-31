@@ -86,7 +86,7 @@ class Estoque{
                 return;
             }
             int opcao;
-            cout << "Produto selecionado: " << listaProdutos->getNome() << " (Estoque: " << listaProdutos->getQtdEstoque() << ")\n";
+            cout << "Produto selecionado: " << listaProdutos[indice]->getNome() << " (Estoque: " << listaProdutos[indice]->getQtdEstoque() << ")\n";
             cout << "1. Repor Estoque "<<endl;
             cout << "2. Dar Baixa no Estoque"<<endl;
             cout << "3. Alterar Preco "<<endl;
@@ -94,8 +94,52 @@ class Estoque{
             cin>>opcao;
             if(opcao == 1){
                 int qtd;
-
+                cout<<"Quantidade a adicionar: ";
+                cin>>qtd;
+                listaProdutos[indice]->reporEstoque(qtd);
+                cout<<"Estoque adicionado com sucesso";
+            }else if (opcao == 2){
+                int qtd;
+                cout<<"Quantidade a retirar: ";
+                cin>>qtd;
+                if(listaProdutos[indice]->darBaixaEstoque(qtd)){
+                    cout<<"Estoque retirado com sucesso";
+                }else{
+                    cout<<"Estoque insuficiente";
+                }
+            }else if(opcao == 3){
+                float preco;
+                cout<<"Novo preco do produto: ";
+                cin>>preco;
+                listaProdutos[indice]->setPreco(preco);
+                cout<<"Preco atualizado com sucesso";
+            }else{
+                cout<<"Opcao invalida";
+                return;
             }
+            
+        }
+        void Remover(){
+            if(listaProdutos.empty()){
+                cout<<"Estoque Vazio";
+                return;
+            }
+            string nome;
+            int indiceDoProduto;
+            cout<<"Digite o nome do produto a ser retirado: ";
+            limparBuffer();
+            getline(cin,nome);
+            indiceDoProduto = Pesquisar(nome);
+            if(indiceDoProduto == -1){
+                cout<<"Produto nao encontrado"<<endl;
+                return;
+            }
+            delete listaProdutos[indiceDoProduto];
+            listaProdutos.erase(listaProdutos.begin() + indiceDoProduto);
+            cout<<"Produto retirado com sucesso";
+
+        }
+        void Relatorio(){
             
         }
 
