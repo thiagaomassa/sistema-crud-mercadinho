@@ -9,6 +9,10 @@ using namespace std;
 class Estoque{
     private:
         vector<Produto*> listaProdutos;
+        void limparBuffer() {
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
     public:
         Estoque(){}
         ~Estoque(){
@@ -22,7 +26,7 @@ class Estoque{
         void ListarTodos(){
             cout<<" === LISTA DE TODOS OS PRODUTOS ==="<<endl;
             for(int i = 0; i < listaProdutos.size(); i++){
-                cout <<i<<". "<< listaProdutos[i]->exibirDetalhes();
+                cout <<i<<". "<<listaProdutos[i]->exibirDetalhes();
             }
         }
         int Pesquisar(string nome){
@@ -68,9 +72,27 @@ class Estoque{
         }
         void Alterar(){
             if(listaProdutos.empty()){
-                
-            }
+                cout<<"Estoque Vazio";
+                return;
 
+            }
+            string nome;
+            cout<<"Digite o nome do produto que deseja alterar: ";
+            limparBuffer();
+            getline(cin,nome);
+            int indice = Pesquisar(nome);
+            if(indice == -1){
+                cout<<"Produto nao encontrado";
+                return;
+            }
+            int opcao;
+            cout << "Produto selecionado: " << p->getNome() << " (Estoque: " << p->getQtdEstoque() << ")\n";
+            cout << "1. Repor Estoque "<<endl;
+            cout << "2. Dar Baixa no Estoque"<<endl;
+            cout << "3. Alterar Preco "<<endl;
+            cout << "Escolha uma opcao: ";
+            cin>>opcao;
+            
         }
 
 
