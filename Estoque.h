@@ -86,12 +86,16 @@ class Estoque{
                 return;
             }
             int opcao;
-            cout << "Produto selecionado: " << p->getNome() << " (Estoque: " << p->getQtdEstoque() << ")\n";
+            cout << "Produto selecionado: " << listaProdutos->getNome() << " (Estoque: " << listaProdutos->getQtdEstoque() << ")\n";
             cout << "1. Repor Estoque "<<endl;
             cout << "2. Dar Baixa no Estoque"<<endl;
             cout << "3. Alterar Preco "<<endl;
             cout << "Escolha uma opcao: ";
             cin>>opcao;
+            if(opcao == 1){
+                int qtd;
+
+            }
             
         }
 
