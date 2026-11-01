@@ -21,16 +21,17 @@ int main() {
     Estoque estoque;
 
     do {
-        cout << "\n====================================\n";
-        cout << "      PAINEL DE TESTE INTERATIVO     \n";
-        cout << "====================================\n";
-        cout << "1. Cadastrar Novo Alimento\n";
-        cout << "2. Listar Todos os Produtos (Polimorfismo)\n";
-        cout << "3. Repor Estoque de um Produto\n";
-        cout << "4. Dar Baixa no Estoque (Venda)\n";
-        cout << "5. Testar Serializacao (Linha para Arquivo)\n";
-        cout << "6. Sair\n";
-        cout << "Escolha uma opcao: ";
+    cout << "\n====================================\n";
+    cout << "      SISTEMA DE ESTOQUE - MERCADINHO     \n";
+    cout << "====================================\n";
+    cout << "1. Cadastrar Novo Produto\n";
+    cout << "2. Listar Todos os Produtos\n";
+    cout << "3. Exibir Detalhes de um Produto\n";
+    cout << "4. Alterar Produto (Repor/Baixa/Preco)\n";
+    cout << "5. Remover Produto\n";
+    cout << "6. Exibir Relatorio Estatistico\n";
+    cout << "7. Sair\n";
+    cout << "Escolha uma opcao: ";
         
         if (!(std::cin >> opcao)) {
             std::cout << "Entrada invalida! Digite um numero.\n";
@@ -68,7 +69,7 @@ int main() {
                 
                     ProdutoAlimento* pAlimento = new ProdutoAlimento(cod, nome, preco, qtd, validade, temp);
                     estoque.Inserir(pAlimento); 
-                    
+
                 } else if (tipo == 2) {
                     string aroma;
                     cout << "Aroma: ";
@@ -79,7 +80,7 @@ int main() {
                     ProdutoLimpeza* pLimpeza = new ProdutoLimpeza(cod, nome, preco, qtd, validade, aroma);
 
                     estoque.Inserir(pLimpeza);
-}
+                }
                 break;
             
             }
@@ -88,35 +89,30 @@ int main() {
                 estoque.ListarTodos();
                 break;
             }
-
             case 3: {
                 estoque.exibirUm();
                 break;
             }
-
             case 4: {
                 estoque.Alterar();
+                break; 
             }
-
             case 5: {
-               estoque.Remover();
+            estoque.Remover();
+            break;  
             }
-
-            case 6:
-                std::cout << "\nLimpando memoria e encerrando...\n";
-                break;
-
+            case 6: {
+                estoque.exibirRelatorio();
+                break; 
+            }
+            case 7: {
+                cout << "Salvando dados e encerrando o sistema...\n";
+                break; 
+            }
             default:
                 std::cout << "Opcao invalida!\n";
                 break;
         }
-
-    } while (opcao != 6);
-
-    for (Produto* p : listaProdutos) {
-        delete p;
-    }
-    listaProdutos.clear();
-
+    } while (opcao != 7);
     return 0;
-}
+ }
