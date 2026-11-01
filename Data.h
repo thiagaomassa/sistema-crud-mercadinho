@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+using namespace std;
 
 class Data {
 private:
@@ -24,10 +25,40 @@ public:
     int getMes() const { return mes; }
     int getAno() const { return ano; }
 
+    static bool ehValida(int d, int m, int a) {
+        if (a < 1000 || a > 9999 || m < 1 || m > 12 || d < 1) {
+            return false;
+        }
+
+        const int diasPorMes[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        return d <= diasPorMes[m - 1];
+    }
+
     // Sets
-    void setDia(int d) { dia = d; }
-    void setMes(int m) { mes = m; }
-    void setAno(int a) { ano = a; }
+    void setDia(int d) { 
+        if (d >= 1 && d <= 31) {
+            dia = d;
+        }
+        else {
+            cout << "Dia invalido" << endl;
+        }
+    }
+    void setMes(int m) { 
+        if (m >= 1 && m <= 12) {
+            mes = m;
+        }
+        else {
+            cout << "Mes invalido" << endl;
+        }
+    }
+    void setAno(int a) { 
+        if (a >= 1000 && a <= 9999) {
+            ano = a;
+        }
+        else {
+            cout << "Ano invalido" << endl;
+        }
+    }
 
     //"DD/MM/AAAA"
     std::string paraString() const {
@@ -42,4 +73,3 @@ public:
         std::cout << paraString() << std::endl;
     }
 };
-
