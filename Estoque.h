@@ -2,13 +2,81 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <limits> // Necessário para o numeric_limits do limparBuffer
+#include <limits> 
 #include "Produto.h"
+#include <fstream>
+#include <sstream>
+
 using namespace std;
 
 class Estoque {
     private:
         vector<Produto*> listaProdutos;
+        string nomeArquivo = "dados_mercadinho.txt";
+
+        void carregarArquivo(){
+            ifstream arquivo(nomeArquivo);
+            if(! arquivo.is_open()){
+                cout<<"Não foi possivel carregar os dados";
+                return;
+            }else{
+                string linha;
+                while(getline(arquivo,linha)){
+                    if(linha.empty()) continue; 
+                    string tipo, cod, nome, custo, qtd, d, m, a;
+                    stringstream fluxo(linha);
+
+                    getline(fluxo,tipo,';');
+                    getline(fluxo,cod,';');
+                    getline(fluxo,nome,';');
+                    getline(fluxo,custo,';');
+                    getline(fluxo,qtd,';');
+                    getline(fluxo,d,';');
+                    getline(fluxo,m,';');
+                    getline(fluxo,a,';');
+
+                    int codigo = stoi(cod);
+                    double preco = stod(custo);
+                    int qtdestoque = stoi(qtd);
+                    int dia = stoi(d);
+                    int mes = stoi(m);
+                    int ano = stoi(a);
+
+                    if(tipo == "ALIMENTO"){
+                        string temp;
+                        getline(fluxo,temp,';');
+                        double tempConst = stod(temp);
+                        Data validade(dia, mes, ano);
+                        ProdutoAlimento *ptdAlimento = new ProdutoAlimento(codigo,nome,preco,qtdestoque,validade,tempConst);
+                        listaProdutos.push_back(ptdAlimento);
+
+                    }else if(tipo == "LIMPEZA"){
+                        string aroma;
+                        getline(fluxo,aroma,';');
+                        Data validade(dia, mes, ano);
+                        ProdutoLimpeza *ptdLimpeza = new ProdutoLimpeza(codigo,nome,preco,qtdestoque,validade,aroma);
+                        listaProdutos.push_back(ptdLimpeza);
+                    }
+                    
+
+            }
+        }
+            arquivo.close();
+    }
+
+        void salvarArquivo(){
+            ofstream arquivo(nomeArquivo);
+            if(!arquivo.is_open()){
+                cout<<"Não foi possivel salvar os dados";
+                return;
+            }else{
+                for(int i = 0; i < listaProdutos.size();i++){
+                   arquivo << listaProdutos[i]->serializar() <<endl;
+
+                }
+            }
+            arquivo.close();
+    }
         
         void limparBuffer() {
             cin.clear();
@@ -16,10 +84,13 @@ class Estoque {
         }
         
     public:
-        Estoque() {}
+        Estoque() {
+            carregarArquivo();
+        }
         ~Estoque() {
-            for (Produto* p : listaProdutos) {
-                delete p;
+            salvarArquivo();
+            for (int i = 0; i < listaProdutos.size(); i++) {
+                 delete listaProdutos[i];
             }
             listaProdutos.clear();
         }
@@ -167,6 +238,21 @@ class Estoque {
             cout << "Produto retirado com sucesso\n";
         }
         void exibirRelatorio(){
-            
+            if(listaProdutos.empty()){
+                cout<<"Nao ha produtos cadastrados"<<endl;
+                return;
+            }
+            int totalUnidadesEstoque = 0;
+            double valorTotalPatrimonio = 0;
+
+            for(int i = 0; i < listaProdutos.size(); i++){
+                totalUnidadesEstoque += listaProdutos[i]->getQtdEstoque();
+                valorTotalPatrimonio += listaProdutos[i]->getQtdEstoque() * listaProdutos[i]->getPreco();
+            }
+            cout<<"----------RELATORIO ESTATISTICO----------"<<endl;
+            cout<<"Total de produtos = "<<listaProdutos.size()<<endl;
+            cout<<"Total de unidades em estoque = "<<totalUnidadesEstoque<<endl;
+            cout<<"Valor total do patrimonio = "<<valorTotalPatrimonio<<endl;
+
         }
 };
