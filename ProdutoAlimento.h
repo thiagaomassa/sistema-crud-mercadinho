@@ -10,7 +10,7 @@ class ProdutoAlimento : public Produto{
         double tempCons; //temperatura de conservação do produto alimenticio
 
     public:
-        ProdutoAlimento(int cod, const std::string& n, double p, int qtd, const Data& v, double temp)
+        ProdutoAlimento(int cod, const string& n, double p, int qtd, const Data& v, double temp)
         : Produto(cod, n, p, qtd, v), tempCons(temp) {}
 
     double getTemp() const {
@@ -29,12 +29,12 @@ class ProdutoAlimento : public Produto{
                   << " | Temp. Maxima: " << tempCons << "°C\n";
     }
 
-    std::string getTipo() const override {
+    string getTipo() const override {
         return "ALIMENTO";
     }
 
-    std::string serializar() const override {
-        std::ostringstream oss;
+    string serializar() const override {
+        ostringstream oss;
         oss << getTipo() << ";"
             << codigo << ";"
             << nome << ";"
