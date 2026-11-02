@@ -5,17 +5,19 @@
 #include <string>
 #include "Produto.h"
 
-class ProdutoAlimento : public Produto{
-    private:
-        double tempCons; //temperatura de conservação do produto alimenticio
+class ProdutoAlimento : public Produto {
+private:
+    double tempCons;
 
-    public:
-        ProdutoAlimento(int cod, const string& n, double p, int qtd, const Data& v, double temp)
+public:
+    ProdutoAlimento(int cod, const string& n, double p, int qtd,
+                    const Data& v, double temp)
         : Produto(cod, n, p, qtd, v), tempCons(temp) {}
 
     double getTemp() const {
-        return tempCons; 
+        return tempCons;
     }
+
     void setTemp(double temp) {
         tempCons = temp;
     }
@@ -35,16 +37,10 @@ class ProdutoAlimento : public Produto{
 
     string serializar() const override {
         ostringstream oss;
-        oss << getTipo() << ";"
-            << codigo << ";"
-            << nome << ";"
-            << preco << ";"
-            << qtdestoque << ";"
-            << validade.getDia() << ";"
-            << validade.getMes() << ";"
-            << validade.getAno() << ";"
-            << tempCons;
+        oss << getTipo() << ";" << codigo << ";" << nome << ";"
+            << preco << ";" << qtdestoque << ";"
+            << validade.getDia() << ";" << validade.getMes() << ";"
+            << validade.getAno() << ";" << tempCons;
         return oss.str();
     }
-    
 };
