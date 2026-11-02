@@ -1,7 +1,6 @@
 #include <iostream>
-#include <vector>
-#include <string>
 #include <limits>
+#include <string>
 #include "Data.h"
 #include "Produto.h"
 #include "ProdutoAlimento.h"
@@ -10,7 +9,6 @@
 
 using namespace std;
 
-//limpar o buffer do teclado
 void limparBuffer() {
     cin.clear();
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -22,18 +20,18 @@ int main() {
 
     do {
         system("clear");
-    cout << "\n====================================\n";
-    cout << "      SISTEMA DE ESTOQUE - MERCADINHO     \n";
-    cout << "====================================\n";
-    cout << "1. Cadastrar Novo Produto\n";
-    cout << "2. Listar Todos os Produtos\n";
-    cout << "3. Exibir Detalhes de um Produto\n";
-    cout << "4. Alterar Produto (Repor/Baixa/Preco)\n";
-    cout << "5. Remover Produto\n";
-    cout << "6. Exibir Relatorio Estatistico\n";
-    cout << "7. Sair\n";
-    cout << "Escolha uma opcao: ";
-        
+        cout << "\n====================================\n";
+        cout << "      SISTEMA DE ESTOQUE - MERCADINHO\n";
+        cout << "====================================\n";
+        cout << "1. Cadastrar Novo Produto\n";
+        cout << "2. Listar Todos os Produtos\n";
+        cout << "3. Exibir Detalhes de um Produto\n";
+        cout << "4. Alterar Produto (Repor/Baixa/Preco)\n";
+        cout << "5. Remover Produto\n";
+        cout << "6. Exibir Relatorio Estatistico\n";
+        cout << "7. Sair\n";
+        cout << "Escolha uma opcao: ";
+
         if (!(cin >> opcao)) {
             cout << "Entrada invalida! Digite um numero.\n";
             limparBuffer();
@@ -46,9 +44,9 @@ int main() {
                 string nome;
                 double preco;
 
-                cout << "Codigo: "; 
+                cout << "Codigo: ";
                 cin >> cod;
-                cout << "Nome: "; 
+                cout << "Nome: ";
                 cin.ignore();
                 getline(cin, nome);
                 cout << "Preco: ";
@@ -69,93 +67,99 @@ int main() {
                     break;
                 }
 
-                Data validade(d, m, a); 
+                Data validade(d, m, a);
 
                 cout << "Tipo do produto (1-Alimento, 2-Limpeza): ";
                 cin >> tipo;
 
                 if (tipo == 1) {
                     double temp;
-                    cout << "Temperatura de conservacao: "; cin >> temp;
-                    
-                
-                    ProdutoAlimento* pAlimento = new ProdutoAlimento(cod, nome, preco, qtd, validade, temp);
-                    estoque.Inserir(pAlimento); 
+                    cout << "Temperatura de conservacao: ";
+                    cin >> temp;
 
-                } else if (tipo == 2) {
+                    ProdutoAlimento* pAlimento = new ProdutoAlimento(
+                        cod, nome, preco, qtd, validade, temp);
+                    estoque.Inserir(pAlimento);
+                }
+                else if (tipo == 2) {
                     string aroma;
                     cout << "Aroma: ";
-                    cin.ignore(); 
+                    cin.ignore();
                     getline(cin, aroma);
-                    
-                
-                    ProdutoLimpeza* pLimpeza = new ProdutoLimpeza(cod, nome, preco, qtd, validade, aroma);
 
+                    ProdutoLimpeza* pLimpeza = new ProdutoLimpeza(
+                        cod, nome, preco, qtd, validade, aroma);
                     estoque.Inserir(pLimpeza);
                 }
                 break;
-            
             }
 
             case 2: {
                 int a = 0;
-                while (a !=1){
+                while (a != 1) {
                     system("clear");
                     estoque.ListarTodos();
                     cout << "1 - Sair: ";
                     cin >> a;
                 }
-                
                 break;
             }
             case 3: {
                 int a = 0;
-                while (a !=1){
+                while (a != 1) {
                     system("clear");
-                estoque.exibirUm();
-                cout << "1 - Sair" << endl << "2 - Exibir outro Produto" << endl << "Digite: ";
+                    estoque.exibirUm();
+                    cout << "1 - Sair" << endl
+                         << "2 - Exibir outro Produto" << endl
+                         << "Digite: ";
                     cin >> a;
                 }
                 break;
             }
             case 4: {
                 int a = 0;
-                while (a !=1){
+                while (a != 1) {
                     system("clear");
-                estoque.Alterar();
-                cout << "1 - Sair" << endl << "2 - Alterar outro Produto" << endl << "Digite: ";
+                    estoque.Alterar();
+                    cout << "1 - Sair" << endl
+                         << "2 - Alterar outro Produto" << endl
+                         << "Digite: ";
                     cin >> a;
                 }
-                break; 
+                break;
             }
             case 5: {
                 int a = 0;
-                while (a !=1){
+                while (a != 1) {
                     system("clear");
                     estoque.Remover();
-                    cout << "1 - Sair" << endl << "2 - Remover outro Produto" << endl << "Digite: ";
+                    cout << "1 - Sair" << endl
+                         << "2 - Remover outro Produto" << endl
+                         << "Digite: ";
                     cin >> a;
                 }
-            break;  
+                break;
             }
             case 6: {
                 int a = 0;
-                while (a !=1){
+                while (a != 1) {
                     system("clear");
-                estoque.exibirRelatorio();
-                cout << "1 - Sair" << endl << "Digite: ";
+                    estoque.exibirRelatorio();
+                    cout << "1 - Sair" << endl << "Digite: ";
                     cin >> a;
                 }
-                break; 
+                break;
             }
             case 7: {
                 cout << "Salvando dados e encerrando o sistema...\n";
-                break; 
+                break;
             }
+
             default:
-                std::cout << "Opcao invalida!\n";
+                cout << "Opcao invalida!\n";
                 break;
         }
     } while (opcao != 7);
+
     return 0;
- }
+}
