@@ -30,15 +30,22 @@ public:
         return ano;
     }
 
+    static bool ehBissexto(int a) {
+        return (a % 4 == 0 && a % 100 != 0) || (a % 400 == 0);
+    }
+
     static bool ehValida(int d, int m, int a) {
         if (a < 1000 || a > 9999 || m < 1 || m > 12 || d < 1) {
             return false;
         }
 
-        const int diasPorMes[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        int diasPorMes[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        if (m == 2 && ehBissexto(a)) {
+            diasPorMes[1] = 29;
+        }
+
         return d <= diasPorMes[m - 1];
     }
-
     void setDia(int d) {
         if (d >= 1 && d <= 31) {
             dia = d;
