@@ -44,8 +44,22 @@ int main() {
                 string nome;
                 double preco;
 
+                while (true){               
                 cout << "Codigo: ";
-                cin >> cod;
+                if (!(cin >> cod)) {
+                cout << "Entrada invalida! Digite um numero.\n";
+                limparBuffer();
+                continue;
+                }
+
+                if (estoque.codigoExiste(cod)) {
+                    cout << "Erro: Ja existe um produto com o codigo " << cod << "! Tente outro.\n";
+                    continue;
+                }
+
+                break; // Codigo valido e unico
+                }
+
                 cout << "Nome: ";
                 cin.ignore();
                 getline(cin, nome);
@@ -159,7 +173,7 @@ int main() {
                 cout << "Opcao invalida!\n";
                 break;
         }
-    } while (opcao != 7);
+    } while(opcao != 7);
 
     return 0;
 }

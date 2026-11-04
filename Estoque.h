@@ -126,7 +126,16 @@ public:
             listaProdutos[i]->exibirDetalhes();
         }
     }
-
+    bool codigoExiste(int cod) const {
+    for (size_t i = 0; i < listaProdutos.size(); i++) {
+        if (listaProdutos[i]->getCodigo() == cod) {
+            return true;
+        }
+    }
+    return false;
+    
+    }
+    
     int Pesquisar(string nome) {
         vector<int> indicesEncontrados;
 
